@@ -4,17 +4,20 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
+import { useTranslations } from "@/hooks/useTranslations";
 
 export default function Video() {
+  const { t } = useTranslations(); // Add translation hook
+  
   const videos = [
     {
       id: 1,
-      title: "Première Partie",
+      title: t('video.part1'),
       url: "https://d21ulo4r1z07kx.cloudfront.net/MadagascarPartOne.mp4",
     },
     {
       id: 2,
-      title: "Deuxième Partie",
+      title: t('video.part2'),
       url: "https://d21ulo4r1z07kx.cloudfront.net/MadagascarPartTwo.mp4",
     },
   ];
@@ -49,22 +52,22 @@ export default function Video() {
       } catch (error) {
         console.error("Error fetching video status:", error);
         toast({
-          title: "Erreur",
-          description: "Impossible de charger l'état de la vidéo",
+          title: t('common.error'),
+          description: t('video.errorLoading'),
           variant: "destructive",
         });
       }
     };
 
     fetchVideoStatus();
-  }, [session, status]);
+  }, [session, status, t]);
 
   const handleWatchNow = (videoId) => {
     // Check if this is video 2 and video 1 hasn't been watched yet
     if (videoId === 2 && !videoStates.video1.watched) {
       toast({
-        title: "Vidéo verrouillée",
-        description: "Vous devez d'abord regarder la première vidéo",
+        title: t('video.videoLocked'),
+        description: t('video.mustWatchFirst'),
         variant: "destructive",
       });
       return;
@@ -102,8 +105,8 @@ export default function Video() {
     } catch (error) {
       console.error("Error updating video status:", error);
       toast({
-        title: "Erreur",
-        description: "Impossible de marquer la vidéo comme regardée",
+        title: t('common.error'),
+        description: t('video.errorMarking'),
         variant: "destructive",
       });
     }
@@ -114,8 +117,8 @@ export default function Video() {
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-6">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-black-600 mb-6">Vidéos du cours</h1>
-        <p className="text-black-500 mb-8">Choisissez une vidéo à regarder.</p>
+        <h1 className="text-4xl font-bold text-black-600 mb-6">{t('video.title')}</h1>
+        <p className="text-black-500 mb-8">{t('video.subtitle')}</p>
 
         <div className="space-y-6">
           {videos.map((video) => {
@@ -132,8 +135,8 @@ export default function Video() {
               >
                 <div className="ml-4">
                   <h2 className="text-lg font-semibold">{video.title}</h2>
-                  {watched && <p className="text-green-500 font-medium">Déjà vu</p>}
-                  {isLocked && <p className="text-red-500 font-medium">Verrouillé - Regardez d&apos;abord la première vidéo</p>}
+                  {watched && <p className="text-green-500 font-medium">{t('video.alreadyWatched')}</p>}
+                  {isLocked && <p className="text-red-500 font-medium">{t('video.locked')}</p>}
                 </div>
                 <button
                   onClick={() => handleWatchNow(video.id)}
@@ -146,7 +149,7 @@ export default function Video() {
                   }`}
                   disabled={isLocked || loading}
                 >
-                  {loading ? "Chargement..." : isLocked ? "Verrouillé" : "Regarder"}
+                  {loading ? t('common.loading') : isLocked ? t('video.lockedButton') : t('video.watchNow')}
                 </button>
               </div>
             );
@@ -155,7 +158,7 @@ export default function Video() {
 
         {currentVideo && (
           <div className="mt-8 bg-white-500 shadow-lg rounded-lg p-6">
-            <h2 className="text-2xl font-semibold text-black-600 mb-4">Lecture en cours</h2>
+            <h2 className="text-2xl font-semibold text-black-600 mb-4">{t('video.nowPlaying')}</h2>
             <div className="flex justify-center">
               <video
                 controls
@@ -174,7 +177,7 @@ export default function Video() {
               onClick={() => router.push("/dashboard")}
               className="px-6 py-3 bg-blue-500 text-white-500 font-semibold rounded-lg shadow-lg hover:bg-blue-600 transition-all"
             >
-              Retour au tableau de bord
+              {t('video.backToDashboard')}
             </button>
           </div>
         )}

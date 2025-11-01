@@ -1,16 +1,18 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useSession, signOut } from "next-auth/react"; // Import hooks from next-auth
+import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import { Link as LinkScroll } from "react-scroll";
 import ButtonOutline from "../misc/ButtonOutline.";
 import Image from "next/image";
 import Logo from "../../public/assets/sosal.png";
-
+import LanguageSwitcher from "./../LanguageSwitcher";
+import { useTranslations } from "@/hooks/useTranslations";
 
 const Header = () => {
-  const { data: session } = useSession(); // Get session data
+  const { data: session } = useSession();
+  const { t } = useTranslations(); // Add translation hook
   const [activeLink, setActiveLink] = useState(null);
   const [scrollActive, setScrollActive] = useState(false);
 
@@ -47,7 +49,7 @@ const Header = () => {
                   : " text-black-500 hover:text-orange-500")
               }
             >
-              Acceuil
+              {t('header.home')}
             </LinkScroll>
             <LinkScroll
               activeClass="active"
@@ -63,37 +65,43 @@ const Header = () => {
                   : " text-black-500 hover:text-orange-500")
               }
             >
-              Information
+              {t('header.information')}
             </LinkScroll>
           </ul>
           <div className="col-start-10 col-end-12 font-medium flex justify-end items-center">
             {session ? (
-              // Show Dashboard and Logout buttons if user is logged in
               <>
                 <Link
                   href="/dashboard"
                   className="text-black-600 mx-2 sm:mx-4 capitalize tracking-wide hover:text-orange-500 transition-all"
                 >
-                  Panneau de bord
+                  {t('header.dashboard')}
                 </Link>
 
-                  <button onClick={() => signOut()} className="font-medium tracking-wide py-2 px-5 sm:px-8 border border-orange-500 text-orange-500 bg-white-500 outline-none rounded-l-full rounded-r-full capitalize hover:bg-orange-500 hover:text-white-500 transition-all hover:shadow-orange ">Déconnexion</button>
-                
+                <button 
+                  onClick={() => signOut()} 
+                  className="font-medium tracking-wide py-2 px-5 sm:px-8 border border-orange-500 text-orange-500 bg-white-500 outline-none rounded-l-full rounded-r-full capitalize hover:bg-orange-500 hover:text-white-500 transition-all hover:shadow-orange"
+                >
+                  {t('header.logout')}
+                </button>
               </>
             ) : (
-              // Show Login and Register buttons if user is not logged in
               <>
                 <Link
                   href="/login"
                   className="text-black-600 mx-2 sm:mx-4 capitalize tracking-wide hover:text-orange-500 transition-all"
                 >
-                  Connexion
+                  {t('header.login')}
                 </Link>
                 <Link href="/register">
-                  <ButtonOutline>Enregistrement</ButtonOutline>
+                  <ButtonOutline>{t('header.register')}</ButtonOutline>
                 </Link>
               </>
             )}
+            {/* Language Switcher */}
+            <div className="flex justify-end mb-4 mt-6 mr-7 py-2 px-6 pb-4">
+              <LanguageSwitcher />
+            </div>
           </div>
         </nav>
       </header>
@@ -130,7 +138,7 @@ const Header = () => {
                   d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              Acceuil
+              {t('header.home')}
             </LinkScroll>
             <LinkScroll
               activeClass="active"
@@ -160,7 +168,7 @@ const Header = () => {
                   d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9-3-9m-9 9a9 9 0 019-9"
                 />
               </svg>
-              Information
+              {t('header.information')}
             </LinkScroll>
           </ul>
         </div>

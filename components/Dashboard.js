@@ -5,12 +5,15 @@ import { BarChart2, BookOpen, CheckCircle, Download, Video } from 'lucide-react'
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
+import { useTranslations } from '@/hooks/useTranslations';
 
 export default function Dashboard() {
+  const { t } = useTranslations(); // Add translation hook
+  
   const [progress, setProgress] = useState({
     videosCompleted: 0,
     quizPassed: false,
-    questionnaireCompleted: false, // Changed from number to boolean
+    questionnaireCompleted: false,
     attestationDownloaded: false,
   });
 
@@ -21,7 +24,7 @@ export default function Dashboard() {
     if (status === 'loading') return;
 
     if (!session || !session.user?.email) {
-      console.error('L&apos;utilisateur n&apos;est pas connecté');
+      console.error('L\'utilisateur n\'est pas connecté');
       return;
     }
 
@@ -32,7 +35,7 @@ export default function Dashboard() {
         });
     
         if (!response.ok) {
-          throw new Error('échec du fetch du statut de l&apos;attestation');
+          throw new Error('échec du fetch du statut de l\'attestation');
         }
     
         const data = await response.json();
@@ -41,7 +44,7 @@ export default function Dashboard() {
           setGotAttestation(data.gotAttestation);
         }
       } catch (error) {
-        console.error('échec du fetch du statut de l&apos;attestation:', error);
+        console.error('échec du fetch du statut de l\'attestation:', error);
       }
     };
   
@@ -85,7 +88,7 @@ export default function Dashboard() {
     
           setProgress((prev) => ({
             ...prev,
-            questionnaireCompleted, // Directly set the boolean value
+            questionnaireCompleted,
           }));
         }
       } catch (error) {
@@ -127,7 +130,7 @@ export default function Dashboard() {
     const completedSteps = [
       progress.videosCompleted === 2,
       progress.quizPassed,
-      progress.questionnaireCompleted, // Now using the boolean directly
+      progress.questionnaireCompleted,
       gotAttestation,
     ].filter(Boolean).length;
 
@@ -144,7 +147,7 @@ export default function Dashboard() {
         aria-valuemin={0}
         aria-valuemax={100}
       >
-        <span className="sr-only">{`${progress}% Complété`}</span>
+        <span className="sr-only">{`${progress}% ${t('dashboard.progress.completed')}`}</span>
       </div>
       <div className="absolute inset-0 flex items-center justify-center">
         <span className="text-sm font-semibold text-white-500">{`${progress}%`}</span>
@@ -174,69 +177,69 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-white-300 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold text-white-500 mb-2">
-          Progrès de la formation &quot;{session?.user?.fullName?.toUpperCase() || "UTILISATEUR"}&quot;
+          {t('dashboard.title')} &quot;{session?.user?.fullName?.toUpperCase() || "UTILISATEUR"}&quot;
         </h1>
-        <p className="text-black-500 mb-4">Suivez votre parcours d&apos;apprentissage !</p>
+        <p className="text-black-500 mb-4">{t('dashboard.subtitle')}</p>
 
         <ProgressBar progress={overallProgress} />
 
         <div className="bg-white-500 shadow-lg rounded-2xl p-8 mb-8">
-          <h2 className="text-2xl font-semibold text-black-600 mb-6">Statut de la complétion</h2>
+          <h2 className="text-2xl font-semibold text-black-600 mb-6">{t('dashboard.completionStatus')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <ProgressItem
               icon={BookOpen}
-              title="Vidéos Regardées"
+              title={t('dashboard.progress.videosWatched')}
               value={`${progress.videosCompleted}/2`}
               completed={progress.videosCompleted === 2}
             />
             <ProgressItem
               icon={BarChart2}
-              title="Performance du Quiz"
-              value={progress.quizPassed ? 'Réussi' : 'Pas encore réussi'}
+              title={t('dashboard.progress.quizPerformance')}
+              value={progress.quizPassed ? t('dashboard.progress.passed') : t('dashboard.progress.notPassed')}
               completed={progress.quizPassed}
             />
             <ProgressItem
               icon={CheckCircle}
-              title="Questionnaire"
-              value={progress.questionnaireCompleted ? 'Terminé' : 'Pas encore fait'}
+              title={t('dashboard.progress.questionnaire')}
+              value={progress.questionnaireCompleted ? t('dashboard.progress.completed') : t('dashboard.progress.notCompleted')}
               completed={progress.questionnaireCompleted}
             />
             <ProgressItem
               icon={Download}
-              title="Attestation de formation"
-              value={gotAttestation ? 'Téléchargée' : 'Pas encore téléchargée'}
+              title={t('dashboard.progress.certificate')}
+              value={gotAttestation ? t('dashboard.progress.downloaded') : t('dashboard.progress.notDownloaded')}
               completed={gotAttestation}
             />
           </div>
         </div>
 
         <div className="bg-white-500 shadow-lg rounded-2xl p-8 mb-8">
-          <h2 className="text-2xl font-semibold text-black-600 mb-6">Accédez à vos supports de formation</h2>
+          <h2 className="text-2xl font-semibold text-black-600 mb-6">{t('dashboard.accessMaterials')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="flex items-center p-6 bg-blue-200 rounded-lg">
               <Video className="h-10 w-10 text-blue-500 mr-4" />
               <div>
-                <p className="text-sm font-medium text-black-600 mb-1">Accédez aux vidéos</p>
+                <p className="text-sm font-medium text-black-600 mb-1">{t('dashboard.actions.accessVideos')}</p>
                 <Link href="/video" className="text-blue-500 font-bold text-xl">
-                  Regardez les vidéos
+                  {t('dashboard.actions.watchVideos')}
                 </Link>
               </div>
             </div>
             <div className="flex items-center p-6 bg-blue-200 rounded-lg">
               <BookOpen className="h-10 w-10 text-blue-500 mr-4" />
               <div>
-                <p className="text-sm font-medium text-black-600 mb-1">Complétez le questionnaire</p>
+                <p className="text-sm font-medium text-black-600 mb-1">{t('dashboard.actions.completeQuestionnaire')}</p>
                 <Link href="/questionnaire" className="text-blue-500 font-bold text-xl">
-                  Complétez le questionnaire
+                  {t('dashboard.actions.completeQuestionnaire')}
                 </Link>
               </div>
             </div>
             <div className="flex items-center p-6 bg-blue-200 rounded-lg">
               <BarChart2 className="h-10 w-10 text-blue-500 mr-4" />
               <div>
-                <p className="text-sm font-medium text-black-600 mb-1">Passez le quiz</p>
+                <p className="text-sm font-medium text-black-600 mb-1">{t('dashboard.actions.takeQuiz')}</p>
                 <Link href="/quiz" className="text-blue-500 font-bold text-xl">
-                  Passez le quiz
+                  {t('dashboard.actions.takeQuiz')}
                 </Link>
               </div>
             </div>
@@ -246,7 +249,7 @@ export default function Dashboard() {
         {isDownloadButtonVisible && (
           <Link href='/attestation'>
             <Button className="w-full mt-8 text-white-500 bg-blue-500 hover:bg-blue-700">
-              Télécharger l&apos;attestation
+              {t('dashboard.downloadCertificate')}
             </Button>
           </Link>
         )}

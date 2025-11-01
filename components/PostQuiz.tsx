@@ -7,10 +7,12 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from '@/hooks/useTranslations';
 
 export default function PostQuiz() {
   const router = useRouter();
   const { data: session } = useSession();
+  const { t } = useTranslations(); // Add translation hook
 
   const [formData, setFormData] = useState({
     dispositif: '',
@@ -59,26 +61,27 @@ export default function PostQuiz() {
         });
         router.push('/dashboard');
       } else {
-        alert('Échec de la mise à jour des données.');
+        alert(t('questionnaire.updateFailed'));
       }
     } catch (error) {
-      console.error('Erreur lors de la mise à jour des données :', error);
-      alert('Une erreur est survenue. Veuillez réessayer.');
+      console.error('Error updating data:', error);
+      alert(t('questionnaire.updateError'));
     } finally {
       setLoading(false);
     }
   };
 
+  // Questions array with translated labels
   const questions = [
-    { id: 'dispositif', label: 'Votre entreprise a-t-elle mis en place des mesures pour se protéger des actes de corruption ?' },
-    { id: 'engagement', label: 'Engagement formalisé de la Direction contre la corruption sous toutes ses formes (politique anti-corruption, charte anti-corruption et/ou code de conduite) ?' },
-    { id: 'identification', label: 'Identification des risques de corruption et élaboration d’une cartographie des risques ?' },
-    { id: 'formation', label: 'Formation et sensibilisation du personnel aux risques de corruption et à la prévention des conflits d’intérêt ?' },
-    { id: 'procedure', label: 'Procédure de gestion des cadeaux ?' },
-    { id: 'dispositifAlert', label: 'Système d’alerte pour collecter les signalements de préoccupations ?' },
-    { id: 'certifierISO', label: 'Votre entreprise est-elle certifiée ISO 37001 ?' },
-    { id: 'mepSystem', label: 'Votre entreprise est-elle en train de mettre en place un système de gestion anti-corruption en vue d’une certification future selon la norme ISO 37001 ?' },
-    { id: 'intention', label: 'Avez-vous l’intention de certifier votre entreprise selon la norme anti-corruption ISO 37001 ?' },
+    { id: 'dispositif', label: t('questionnaire.questions.dispositif') },
+    { id: 'engagement', label: t('questionnaire.questions.engagement') },
+    { id: 'identification', label: t('questionnaire.questions.identification') },
+    { id: 'formation', label: t('questionnaire.questions.formation') },
+    { id: 'procedure', label: t('questionnaire.questions.procedure') },
+    { id: 'dispositifAlert', label: t('questionnaire.questions.dispositifAlert') },
+    { id: 'certifierISO', label: t('questionnaire.questions.certifierISO') },
+    { id: 'mepSystem', label: t('questionnaire.questions.mepSystem') },
+    { id: 'intention', label: t('questionnaire.questions.intention') },
   ];
 
   return (
@@ -86,10 +89,10 @@ export default function PostQuiz() {
       <Card className="w-full max-w-md bg-white-500 rounded-lg shadow-lg border-none">
         <CardHeader className="space-y-2 p-4">
           <CardTitle className="text-2xl font-bold text-center text-blue-500">
-            Questionnaire Anti-Corruption
+            {t('questionnaire.title')}
           </CardTitle>
           <CardDescription className="text-center text-gray-500 text-sm">
-            Répondez par Oui, Non ou une date.
+            {t('questionnaire.subtitle')}
           </CardDescription>
         </CardHeader>
         <CardContent className="p-6">
@@ -105,7 +108,7 @@ export default function PostQuiz() {
                   value={formData[question.id as keyof typeof formData]}
                   onChange={handleChange}
                   required
-                  placeholder="Oui, Non ou JJ/MM/AA"
+                  placeholder={t('questionnaire.placeholder')}
                   className="w-full border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-700"
                 />
               </div>
@@ -121,9 +124,9 @@ export default function PostQuiz() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  Envoi en cours...
+                  {t('questionnaire.submitting')}
                 </span>
-              ) : 'Envoyer'}
+              ) : t('common.submit')}
             </Button>
           </form>
         </CardContent>

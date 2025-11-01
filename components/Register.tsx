@@ -7,25 +7,31 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useToast } from '@/hooks/use-toast';
-
-const FormSchema = z
-  .object({
-    fullName: z.string().min(1, 'Le nom complet est requis').max(100),
-    email: z.string().min(1, 'L&apos;email est requis').email('Email invalide'),
-    companyName: z.string().min(1, 'Le nom de l&apos;entreprise est requis'),
-    password: z.string().min(1, 'Le mot de passe est requis').min(8, 'Le mot de passe doit contenir au moins 8 caractères'),
-    confirmPassword: z.string().min(1, 'La confirmation du mot de passe est requise'),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ['confirmPassword'],
-    message: 'Les mots de passe ne correspondent pas',
-  });
+import { useTranslations } from '@/hooks/useTranslations';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 export default function Register() {
   const router = useRouter();
+  const { t } = useTranslations(); // Add translation hook
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const { toast } = useToast();
+
+  // Create FormSchema with translated error messages
+  const FormSchema = z
+    .object({
+      fullName: z.string().min(1, t('auth.errors.fullNameRequired')).max(100),
+      email: z.string().min(1, t('auth.errors.emailRequired')).email(t('auth.errors.emailInvalid')),
+      companyName: z.string().min(1, t('auth.errors.companyNameRequired')),
+      password: z.string()
+        .min(1, t('auth.errors.passwordRequired'))
+        .min(8, t('auth.errors.passwordMin')),
+      confirmPassword: z.string().min(1, t('auth.errors.confirmPasswordRequired')),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      path: ['confirmPassword'],
+      message: t('auth.errors.passwordsMismatch'),
+    });
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -57,21 +63,21 @@ export default function Register() {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || 'Échec de l&apos;inscription');
+        throw new Error(result.error || t('auth.errors.registerFailed'));
       }
 
       toast({
-        title: 'Succès',
-        description: 'Compte créé avec succès !',
+        title: t('common.success'),
+        description: t('auth.registerSuccess'),
       });
       router.push('/login');
     } catch (error) {
       const errorMessage = error instanceof Error 
         ? error.message 
-        : 'Une erreur est survenue lors de l&apos;inscription';
+        : t('auth.errors.registerError');
       
       toast({
-        title: 'Erreur',
+        title: t('common.error'),
         description: errorMessage,
         variant: 'destructive',
       });
@@ -82,16 +88,19 @@ export default function Register() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#67a5f0] via-[#a0c5f5] to-[#135ced] p-4">
+      <div className="absolute top-4 right-4">
+        <LanguageSwitcher />
+      </div>
       <div className="w-full max-w-md">
         <div className="bg-white-500 rounded-2xl shadow-xl overflow-hidden">
           <div className="p-8">
             <h2 className="text-3xl font-bold text-center mb-8 text-[#135ced]">
-              Créer un compte
+              {t('auth.registerTitle')}
             </h2>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <div className="space-y-2">
                 <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
-                  Nom complet
+                  {t('auth.fullName')}
                 </label>
                 <input
                   id="fullName"
@@ -106,7 +115,7 @@ export default function Register() {
               </div>
               <div className="space-y-2">
                 <label htmlFor="companyName" className="block text-sm font-medium text-gray-700">
-                  Nom de l&apos;entreprise
+                  {t('auth.companyName')}
                 </label>
                 <input
                   id="companyName"
@@ -121,7 +130,7 @@ export default function Register() {
               </div>
               <div className="space-y-2">
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  Email
+                  {t('auth.email')}
                 </label>
                 <input
                   id="email"
@@ -136,7 +145,7 @@ export default function Register() {
               </div>
               <div className="space-y-2">
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                  Mot de passe
+                  {t('auth.password')}
                 </label>
                 <div className="relative">
                   <input
@@ -164,7 +173,7 @@ export default function Register() {
               </div>
               <div className="space-y-2">
                 <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-                  Confirmer le mot de passe
+                  {t('auth.confirmPassword')}
                 </label>
                 <div className="relative">
                   <input
@@ -192,17 +201,17 @@ export default function Register() {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    Inscription en cours...
+                    {t('auth.registering')}
                   </>
                 ) : (
-                  'Register'
+                  t('common.register')
                 )}
               </button>
             </form>
             <div className="mt-4 text-center text-sm text-gray-600">
-              Vous avez déjà un compte&apos;?{' '}
+              {t('auth.haveAccount')}{' '}
               <a href="/login" className="font-medium text-[#135ced] hover:text-[#67a5f0]">
-                Connectez-vous ici
+                {t('auth.loginHere')}
               </a>
             </div>
           </div>

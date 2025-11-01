@@ -4,6 +4,7 @@ import "./globals.css";
 import "./tailwind.css";
 import Provider from '@/components/Provider';
 import { Toaster } from '@/components/ui/toaster';
+import TranslationWrapper from './Translationwrapper';
 
 
 export const metadata: Metadata = {

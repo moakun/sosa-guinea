@@ -6,12 +6,16 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { useSession } from "next-auth/react";
-import questions from './questions';
+import { getQuestions } from './questions';
+import { useTranslations } from '@/hooks/useTranslations';
 import Image from "next/image";
 import sosa from '../public/assets/sosal.png';
 import Results from './Results';
 
 const Quiz: React.FC = () => {
+  const { t, locale } = useTranslations();
+  const questions = getQuestions(locale); // Get questions based on current language
+  
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [score, setScore] = useState<number>(0)
   const [showScore, setShowScore] = useState(false)
@@ -38,8 +42,8 @@ const Quiz: React.FC = () => {
             setScore(score)
             setShowScore(false)
             toast({
-              title: "Score insuffisant",
-              description: `Votre score est ${score}, vous devez repasser l&apos;examen.`,
+              title: t('quiz.messages.insufficientScore'),
+              description: t('quiz.messages.mustRetake', { score }),
               variant: "default",
             })
           }
@@ -47,8 +51,8 @@ const Quiz: React.FC = () => {
           setScore(0)
           setShowScore(false)
           toast({
-            title: "Premier examen",
-            description: "Bonne chance pour votre examen !",
+            title: t('quiz.messages.firstExam'),
+            description: t('quiz.messages.goodLuck'),
             variant: "default",
           })
         }
@@ -56,19 +60,19 @@ const Quiz: React.FC = () => {
         console.log(data.message || "Erreur inconnue")
         toast({
           title: "Message",
-          description: data.message || "Impossible de récupérer le score",
+          description: data.message || t('quiz.messages.cannotFetch'),
           variant: "default",
         })
       }
     } catch (error) {
       console.error('Erreur:', error)
       toast({
-        title: "Erreur",
-        description: "Impossible de récupérer le score",
+        title: t('common.error'),
+        description: t('quiz.messages.cannotFetch'),
         variant: "destructive",
       })
     }
-  }, [toast])
+  }, [toast, questions.length, t])
 
   useEffect(() => {
     if (session?.user?.email) {
@@ -136,14 +140,14 @@ const Quiz: React.FC = () => {
       const data = await response.json()
       console.log('Score saved:', data)
       toast({
-        title: "Score enregistré",
-        description: "Votre score a été enregistré avec succès.",
+        title: t('quiz.messages.scoreSaved'),
+        description: t('quiz.messages.scoreSavedSuccess'),
       })
     } catch (error) {
       console.error('Erreur:', error)
       toast({
-        title: "Erreur",
-        description: "Impossible d&apos;enregistrer votre score",
+        title: t('common.error'),
+        description: t('quiz.messages.cannotSave'),
         variant: "destructive",
       })
     }
@@ -165,7 +169,7 @@ const Quiz: React.FC = () => {
       <Card className="w-full max-w-7xl bg-white shadow-lg">
         <CardHeader>
           <CardTitle className="text-center">
-            Quiz sur l&apos;éthique et la lutte contre la corruption
+            {t('quiz.title')}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -176,7 +180,7 @@ const Quiz: React.FC = () => {
               <Progress value={(currentQuestion + 1) / questions.length * 100} className="mb-4 bg-gray-200" />
               <div className="mb-6">
                 <h2 className="text-2xl font-bold mb-2">
-                  Question {currentQuestion + 1}/{questions.length}
+                  {t('quiz.question')} {currentQuestion + 1}/{questions.length}
                 </h2>
                 <p className="text-lg">{questions[currentQuestion].question}</p>
               </div>
@@ -208,14 +212,14 @@ const Quiz: React.FC = () => {
               variant="outline"
               className="bg-white text-black hover:bg-blue-100"
             >
-              Précédent
+              {t('quiz.previous')}
             </Button>
             <Button 
               onClick={handleNext}
               className="bg-blue-500 text-white-500 hover:bg-blue-600"
               disabled={userAnswers[currentQuestion] === null}
             >
-              {currentQuestion === questions.length - 1 ? 'Terminé' : 'Suivant'}
+              {currentQuestion === questions.length - 1 ? t('quiz.finish') : t('quiz.next')}
             </Button>
           </CardFooter>
         )}

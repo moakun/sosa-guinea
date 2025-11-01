@@ -1,0 +1,234 @@
+{
+  "common": {
+    "welcome": "Bienvenido",
+    "start": "¡Comenzar!",
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "logout": "Cerrar sesión",
+    "submit": "Enviar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito"
+  },
+  "header": {
+    "home": "Inicio",
+    "information": "Información",
+    "dashboard": "Panel de control",
+    "logout": "Cerrar sesión",
+    "login": "Iniciar sesión",
+    "register": "Registro"
+  },
+  "hero": {
+    "title": "Formación Anticorrupción y Ética Empresarial",
+    "company": "Sogea Satom Madagascar",
+    "cta": "¡Comenzar!",
+    "supportEmail": "En caso de problemas, envíe un correo electrónico a:",
+    "certificateEmail": "Después de recibir su certificado, envíelo a la siguiente dirección de correo electrónico:"
+  },
+  "feature": {
+    "title": "Puntos importantes de la formación:",
+    "description": "¡Con respecto a nuestra formación, explorará varios aspectos de la lucha contra la corrupción!",
+    "items": [
+      "Compromiso del grupo VINCI.",
+      "Directrices éticas del grupo VINCI.",
+      "Procedimiento de evaluación de terceros.",
+      "Régimen disciplinario y sanciones.",
+      "Política y procedimientos anticorrupción de Sogea Satom Madagascar."
+    ]
+  },
+  "auth": {
+    "loginTitle": "Iniciar sesión",
+    "registerTitle": "Crear una cuenta",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "fullName": "Nombre completo",
+    "companyName": "Nombre de la empresa",
+    "haveAccount": "¿Ya tienes una cuenta?",
+    "noAccount": "¿No tienes cuenta?",
+    "loginHere": "Inicia sesión aquí",
+    "registerHere": "Regístrate aquí",
+    "loggingIn": "Iniciando sesión...",
+    "registering": "Registrando...",
+    "registerSuccess": "¡Cuenta creada con éxito!",
+    "errors": {
+      "emailRequired": "El correo electrónico es obligatorio",
+      "emailInvalid": "Correo electrónico inválido",
+      "passwordRequired": "La contraseña es obligatoria",
+      "passwordMin": "La contraseña debe tener al menos 8 caracteres",
+      "confirmPasswordRequired": "La confirmación de contraseña es obligatoria",
+      "passwordsMismatch": "Las contraseñas no coinciden",
+      "fullNameRequired": "El nombre completo es obligatorio",
+      "companyNameRequired": "El nombre de la empresa es obligatorio",
+      "authFailed": "Correo electrónico o contraseña incorrectos",
+      "registerFailed": "Fallo en el registro",
+      "registerError": "Se produjo un error durante el registro"
+    }
+  },
+  "dashboard": {
+    "title": "Progreso de la formación",
+    "subtitle": "¡Sigue tu camino de aprendizaje!",
+    "completionStatus": "Estado de finalización",
+    "accessMaterials": "Accede a tus materiales de formación",
+    "downloadCertificate": "Descargar el certificado",
+    "progress": {
+      "videosWatched": "Videos vistos",
+      "quizPerformance": "Rendimiento del cuestionario",
+      "questionnaire": "Cuestionario",
+      "certificate": "Certificado de formación",
+      "passed": "Aprobado",
+      "notPassed": "Aún no aprobado",
+      "completed": "Completado",
+      "notCompleted": "Aún no completado",
+      "downloaded": "Descargado",
+      "notDownloaded": "Aún no descargado"
+    },
+    "actions": {
+      "watchVideos": "Ver los videos",
+      "completeQuestionnaire": "Completar el cuestionario",
+      "takeQuiz": "Hacer el cuestionario",
+      "accessVideos": "Acceder a los videos"
+    }
+  },
+  "video": {
+    "title": "Videos del curso",
+    "subtitle": "Elige un video para ver.",
+    "part1": "Primera Parte",
+    "part2": "Segunda Parte",
+    "alreadyWatched": "Ya visto",
+    "locked": "Bloqueado - Primero mira el primer video",
+    "watchNow": "Ver",
+    "lockedButton": "Bloqueado",
+    "nowPlaying": "Reproduciendo ahora",
+    "backToDashboard": "Volver al panel",
+    "videoLocked": "Video bloqueado",
+    "mustWatchFirst": "Primero debes ver el primer video",
+    "errorLoading": "No se puede cargar el estado del video",
+    "errorMarking": "No se puede marcar el video como visto"
+  },
+  "quiz": {
+    "title": "Cuestionario sobre ética y lucha contra la corrupción",
+    "question": "Pregunta",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "finish": "Finalizar",
+    "results": {
+      "title": "¡Cuestionario completado!",
+      "yourScore": "Tu puntuación es:",
+      "restart": "Reiniciar el cuestionario",
+      "backToDashboard": "Volver al panel",
+      "goToQuestionnaire": "Ir al cuestionario"
+    },
+    "messages": {
+      "scoreSaved": "Puntuación guardada",
+      "scoreSavedSuccess": "Tu puntuación se ha guardado con éxito.",
+      "insufficientScore": "Puntuación insuficiente",
+      "mustRetake": "Tu puntuación es {score}, debes volver a hacer el examen.",
+      "firstExam": "Primer examen",
+      "goodLuck": "¡Buena suerte en tu examen!",
+      "cannotSave": "No se puede guardar tu puntuación",
+      "cannotFetch": "No se puede recuperar la puntuación"
+    }
+  },
+  "questionnaire": {
+    "title": "Cuestionario Anticorrupción",
+    "subtitle": "Responde con Sí, No o una fecha.",
+    "placeholder": "Sí, No o DD/MM/AA",
+    "submitting": "Enviando...",
+    "updateFailed": "Fallo al actualizar los datos.",
+    "updateError": "Se produjo un error. Por favor, inténtelo de nuevo.",
+    "questions": {
+      "dispositif": "¿Su empresa ha implementado medidas para protegerse de actos de corrupción?",
+      "engagement": "¿Compromiso formalizado de la Dirección contra la corrupción en todas sus formas (política anticorrupción, carta anticorrupción y/o código de conducta)?",
+      "identification": "¿Identificación de riesgos de corrupción y elaboración de un mapa de riesgos?",
+      "formation": "¿Formación y sensibilización del personal sobre los riesgos de corrupción y la prevención de conflictos de interés?",
+      "procedure": "¿Procedimiento de gestión de regalos?",
+      "dispositifAlert": "¿Sistema de alerta para recopilar informes de preocupaciones?",
+      "certifierISO": "¿Su empresa está certificada ISO 37001?",
+      "mepSystem": "¿Su empresa está implementando un sistema de gestión anticorrupción con miras a una certificación futura según la norma ISO 37001?",
+      "intention": "¿Tiene la intención de certificar su empresa según la norma anticorrupción ISO 37001?"
+    }
+  },
+  "certificate": {
+    "title": "Certificado",
+    "download": "Descargar certificado",
+    "certifies": "La empresa Sogea Satom Madagascar Certifica que",
+    "company": "de la empresa",
+    "completed": "ha completado con éxito el siguiente programa de formación:",
+    "course": "Formación Anticorrupción",
+    "date": "Fecha:",
+    "loginRequired": "Por favor, inicie sesión para ver su certificado."
+  },
+  "questions": [
+    {
+      "question": "El grupo VINCI expresó su compromiso con la lucha contra la corrupción desde:",
+      "answers": ["2001", "2003", "2013", "2021"]
+    },
+    {
+      "question": "Los compromisos éticos del grupo VINCI están registrados en los siguientes documentos:",
+      "answers": [
+        "La Carta ética y de comportamiento.",
+        "El código de conducta anticorrupción.",
+        "El manifiesto de Vinci.",
+        "Las tres respuestas anteriores son correctas."
+      ]
+    },
+    {
+      "question": "Según el índice de percepción de la corrupción de TRANSPARENCY INTERNATIONAL, Madagascar es:",
+      "answers": [
+        "140º sobre 180 países a nivel mundial.",
+        "1º en África.",
+        "Ha ganado 15 lugares en la clasificación mundial de TRANSPARENCY INTERNATIONAL entre 2020 y 2021",
+        "Las tres respuestas anteriores son correctas."
+      ]
+    },
+    {
+      "question": "El código penal de Madagascar distingue entre corrupción pasiva y corrupción activa:",
+      "answers": ["VERDADERO", "FALSO"]
+    },
+    {
+      "question": "La norma ISO vigente que define los requisitos para el sistema de gestión anticorrupción es la norma:",
+      "answers": [
+        "ISO 9001 versión 2015",
+        "ISO 14001 versión 2015",
+        "ISO 45001 versión 2018",
+        "ISO 37001 versión 2016"
+      ]
+    },
+    {
+      "question": "La corrupción pasiva es:",
+      "answers": [
+        "El hecho de prometer u ofrecer una ventaja indebida.",
+        "El hecho de solicitar o recibir esta ventaja."
+      ]
+    },
+    {
+      "question": "Sogea Satom Madagascar ha prohibido los regalos en efectivo:",
+      "answers": ["VERDADERO", "FALSO"]
+    },
+    {
+      "question": "Sogea Satom Madagascar ha puesto a disposición de su personal y socios comerciales un sistema de alertas para reportar todas las preocupaciones relacionadas con la corrupción:",
+      "answers": ["VERDADERO", "FALSO"]
+    },
+    {
+      "question": "El procedimiento de evaluación de terceros prevé niveles de diligencia debida que tienen en cuenta:",
+      "answers": [
+        "El riesgo del país donde reside el socio comercial",
+        "La categoría: clientes públicos o privados, proveedores, subcontratistas, Oficinas de estudio, etc.",
+        "El volumen de negocios anual realizado con SOGEA SATOM",
+        "Las tres respuestas anteriores son correctas"
+      ]
+    },
+    {
+      "question": "Según el procedimiento de evaluación de terceros, la diligencia debida de nivel 3 corresponde a:",
+      "answers": [
+        "La consulta de la base de datos world-check o equivalente + Artículos de prensa + Política Anticorrupción disponible en fuente abierta",
+        "La consulta de la base de datos world-check o equivalente + Artículos de prensa + Política Anticorrupción a proporcionar + Cuestionario a proporcionar por el proveedor",
+        "La consulta de la base de datos world-check o equivalente",
+        "Las tres respuestas son correctas"
+      ]
+    }
+  ]
+}
