@@ -13,12 +13,12 @@ export default function Video() {
     {
       id: 1,
       title: t('video.part1'),
-      url: "https://d21ulo4r1z07kx.cloudfront.net/MadagascarPartOne.mp4",
+      url: "https://d21ulo4r1z07kx.cloudfront.net/GEPartOne.mp4",
     },
     {
       id: 2,
       title: t('video.part2'),
-      url: "https://d21ulo4r1z07kx.cloudfront.net/MadagascarPartTwo.mp4",
+      url: "https://d21ulo4r1z07kx.cloudfront.net/GEPartTwo.mp4",
     },
   ];
 
