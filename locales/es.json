@@ -22,7 +22,7 @@
   },
   "hero": {
     "title": "Formación Anticorrupción y Ética Empresarial",
-    "company": "Sogea Satom Madagascar",
+    "company": "Sogea Satom Guinea Ecuatorial",
     "cta": "¡Comenzar!",
     "supportEmail": "En caso de problemas, envíe un correo electrónico a:",
     "certificateEmail": "Después de recibir su certificado, envíelo a la siguiente dirección de correo electrónico:"
@@ -35,7 +35,7 @@
       "Directrices éticas del grupo VINCI.",
       "Procedimiento de evaluación de terceros.",
       "Régimen disciplinario y sanciones.",
-      "Política y procedimientos anticorrupción de Sogea Satom Madagascar."
+      "Política y procedimientos anticorrupción de Sogea Satom Guinea Ecuatorial."
     ]
   },
   "auth": {
@@ -154,7 +154,7 @@
   "certificate": {
     "title": "Certificado",
     "download": "Descargar certificado",
-    "certifies": "La empresa Sogea Satom Madagascar Certifica que",
+    "certifies": "La empresa Sogea Satom Guinea Ecuatorial Certifica que",
     "company": "de la empresa",
     "completed": "ha completado con éxito el siguiente programa de formación:",
     "course": "Formación Anticorrupción",
@@ -176,16 +176,16 @@
       ]
     },
     {
-      "question": "Según el índice de percepción de la corrupción de TRANSPARENCY INTERNATIONAL, Madagascar es:",
+      "question": "Según el índice de percepción de la corrupción de TRANSPARENCY INTERNATIONAL, Guinea Ecuatorial es:",
       "answers": [
-        "140º sobre 180 países a nivel mundial.",
+        "173º sobre 180 países a nivel mundial.",
         "1º en África.",
         "Ha ganado 15 lugares en la clasificación mundial de TRANSPARENCY INTERNATIONAL entre 2020 y 2021",
         "Las tres respuestas anteriores son correctas."
       ]
     },
     {
-      "question": "El código penal de Madagascar distingue entre corrupción pasiva y corrupción activa:",
+      "question": "El código penal de Guinea Ecuatorial distingue entre corrupción pasiva y corrupción activa:",
       "answers": ["VERDADERO", "FALSO"]
     },
     {
@@ -205,11 +205,11 @@
       ]
     },
     {
-      "question": "Sogea Satom Madagascar ha prohibido los regalos en efectivo:",
+      "question": "Sogea Satom Guinea Ecuatorial ha prohibido los regalos en efectivo:",
       "answers": ["VERDADERO", "FALSO"]
     },
     {
-      "question": "Sogea Satom Madagascar ha puesto a disposición de su personal y socios comerciales un sistema de alertas para reportar todas las preocupaciones relacionadas con la corrupción:",
+      "question": "Sogea Satom Guinea Ecuatorial ha puesto a disposición de su personal y socios comerciales un sistema de alertas para reportar todas las preocupaciones relacionadas con la corrupción:",
       "answers": ["VERDADERO", "FALSO"]
     },
     {
