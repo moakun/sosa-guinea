@@ -14,61 +14,41 @@ export default function Attestation() {
   const { t } = useTranslations();
   const [isGenerating, setIsGenerating] = useState(false);
   const certificateRef = useRef<HTMLDivElement>(null);
+  const hiddenCertificateRef = useRef<HTMLDivElement>(null);
 
   const downloadCertificate = async () => {
-    if (!certificateRef.current || !session?.user?.email) return;
+    if (!hiddenCertificateRef.current || !session?.user?.email) return;
 
     setIsGenerating(true);
     try {
-      const canvas = await html2canvas(certificateRef.current, {
-        scale: 2,
+      // Use the hidden, fixed-size certificate for PDF generation
+      const element = hiddenCertificateRef.current;
+      
+      const canvas = await html2canvas(element, {
+        scale: 3, // Higher scale for better quality
         logging: false,
         useCORS: true,
         backgroundColor: "#ffffff",
+        width: 800,
+        height: 600,
+        windowWidth: 800,
+        windowHeight: 600,
         allowTaint: true,
-        removeContainer: true,
         imageTimeout: 15000,
-        x: 0,
-        y: 0,
-        scrollX: 0,
-        scrollY: 0,
-        foreignObjectRendering: false
       });
 
-      const imgData = canvas.toDataURL("image/png", 0.8);
+      const imgData = canvas.toDataURL("image/png", 0.95);
 
+      // Create PDF with exact certificate dimensions
       const pdf = new jsPDF({
         orientation: "landscape",
-        unit: "mm",
-        format: "a4",
-        compress: true
+        unit: "px",
+        format: [800, 600],
+        compress: true,
       });
 
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-      
-      const margin = 10;
-      const availableWidth = pdfWidth - (2 * margin);
-      const availableHeight = pdfHeight - (2 * margin);
-      
-      const canvasRatio = canvas.width / canvas.height;
-      const availableRatio = availableWidth / availableHeight;
-      
-      let imgWidth, imgHeight, x, y;
-      
-      if (canvasRatio > availableRatio) {
-        imgWidth = availableWidth;
-        imgHeight = availableWidth / canvasRatio;
-        x = margin;
-        y = margin + (availableHeight - imgHeight) / 2;
-      } else {
-        imgHeight = availableHeight;
-        imgWidth = availableHeight * canvasRatio;
-        x = margin + (availableWidth - imgWidth) / 2;
-        y = margin;
-      }
-
-      pdf.addImage(imgData, "PNG", x, y, imgWidth, imgHeight, undefined, 'FAST');
+      // Add image at exact size (no margins, no scaling issues)
+      pdf.addImage(imgData, "PNG", 0, 0, 800, 600, undefined, "FAST");
       
       pdf.save("certificat.pdf");
 
@@ -113,9 +93,10 @@ export default function Attestation() {
           </Button>
         </div>
 
+        {/* Visible certificate - responsive with scroll on small screens */}
         <div className="border rounded-lg overflow-hidden shadow-lg">
           <div className="overflow-auto">
-            <div ref={certificateRef}>
+            <div ref={certificateRef} className="min-w-[800px]">
               <Certificate
                 userName={session.user?.fullName || "Participant"}
                 company={session.user?.companyName || "Entreprise"}
@@ -123,6 +104,18 @@ export default function Attestation() {
                 courseName={t('certificate.course')}
               />
             </div>
+          </div>
+        </div>
+
+        {/* Hidden certificate - fixed size for PDF generation */}
+        <div className="fixed -left-[9999px] top-0 pointer-events-none" aria-hidden="true">
+          <div ref={hiddenCertificateRef}>
+            <Certificate
+              userName={session.user?.fullName || "Participant"}
+              company={session.user?.companyName || "Entreprise"}
+              date={new Date()}
+              courseName={t('certificate.course')}
+            />
           </div>
         </div>
       </div>
